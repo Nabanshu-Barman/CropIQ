@@ -56,24 +56,24 @@ export function LoginForm({ onLogin }: LoginFormProps) {
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8 animate-scale-in">
-            <div className="relative inline-block animate-gentle-sway">
-              <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 to-emerald-500/20 rounded-full blur-xl opacity-40 animate-natural-glow" />
-              <div className="relative bg-gradient-to-br from-amber-50 to-green-50 p-6 animate-organic-morph shadow-lg">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-gradient-to-r from-green-400/30 to-emerald-500/20 rounded-2xl blur-xl opacity-40 animate-pulse" />
+              <div className="relative rounded-2xl overflow-hidden shadow-lg animate-gentle-sway">
                 <Image
                   src="/images/logo.png"
                   alt="CropIQ Logo"
-                  width={80}
-                  height={80}
-                  className="relative mx-auto"
+                  width={250}
+                  height={250}
+                  className="object-contain"
                 />
               </div>
             </div>
-            <h1 className="text-5xl font-bold text-gradient-earth mb-2 text-glow-natural animate-slide-up">CropIQ</h1>
+            <h1 className="text-5xl font-bold text-gradient-earth mb-2 text-glow-natural animate-slide-up"></h1>
             <p
               className="text-xl text-muted-foreground font-medium animate-slide-up"
               style={{ animationDelay: "0.2s" }}
             >
-              Predict. Prevent. Profit.
+              
             </p>
           </div>
 

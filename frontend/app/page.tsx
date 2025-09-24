@@ -28,7 +28,7 @@ export default function Home() {
     <main className="min-h-screen relative overflow-hidden">
       <ParticleSystem />
       <FloatingElements />
-
+      
       <div className="relative z-10">
         {appState === "login" && <LoginForm onLogin={handleLogin} />}
         {appState === "location" && <LocationSetup onLocationSet={handleLocationSetup} />}

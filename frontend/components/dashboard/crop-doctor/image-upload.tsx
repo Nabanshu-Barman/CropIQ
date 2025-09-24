@@ -163,7 +163,7 @@ export function ImageUpload({ selectedCrop, onImageUpload, onBack }: ImageUpload
                   <img
                     src={previewUrl! || "/placeholder.svg"}
                     alt="Preview"
-                    className="w-full h-48 object-cover rounded-lg animate-in fade-in duration-500"
+                    className="mx-auto w-[70%] max-h-[300px] object-contain rounded-lg animate-in fade-in duration-500"
                   />
                   <button
                     onClick={handleRemoveFile}

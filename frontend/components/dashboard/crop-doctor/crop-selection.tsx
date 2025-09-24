@@ -21,13 +21,13 @@ const crops = [
     id: "blueberry",
     name: "Blueberry",
     image: "/blueberry-bush-with-ripe-berries.jpg",
-    description: "Antioxidant-rich berries",
+    description: "Small sweet blue berries",
   },
   {
     id: "cherry",
     name: "Cherry",
     image: "/cherry.jpg",
-    description: "Sweet stone fruit",
+    description: "Juicy red stone fruit",
   },
   {
     id: "corn",
@@ -55,7 +55,7 @@ const crops = [
   },
   {
     id: "pepper-bell",
-    name: "Pepper Bell",
+    name: "Bell Pepper",
     image: "/bell pepper.jpg",
     description: "Sweet bell pepper",
   },

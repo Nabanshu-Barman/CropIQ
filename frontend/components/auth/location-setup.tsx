@@ -24,9 +24,9 @@ export function LocationSetup({ onLocationSet }: LocationSetupProps) {
 
     // Mock location data
     const mockLocation = {
-      state: "Maharashtra",
-      district: "Pune",
-      coordinates: { lat: 18.5204, lng: 73.8567 },
+      state: "Tamil Nadu",
+      district: "Chennai",
+      coordinates: { lat: 13.0843, lng: 80.2705 },
       weather: {
         temperature: 28,
         humidity: 65,

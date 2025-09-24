@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { ChevronDown } from "lucide-react"
 import { predictPlantDisease } from "@/services/predictionService"
+import { diseaseData } from "./diseaseData"; 
 
 interface AnalysisResultsProps {
   image: File | null
@@ -55,20 +56,22 @@ export function AnalysisResults({ image, crop, onAnalysisComplete, onViewCommuni
     // After progress animation, call backend
     const analyzeTimeout = setTimeout(
       async () => {
+        function formatDiseaseName(name) {
+          if (!name) return "Unknown Disease";
+          return name
+          .replace(/___/g, " - ")   // Replace triple underscores with " - "
+          .replace(/__/g, " ")      // Replace double underscores with a space
+          .replace(/_/g, " ")       // Replace remaining underscores with space
+          .replace(/\b\w/g, (c) => c.toUpperCase()); // Capitalize first letter of each word
+          }
+
         if (intervalRef.current) clearInterval(intervalRef.current)
         try {
           const backendResult = await predictPlantDisease(image)
           console.log("Backend result:", backendResult)
 
-          const enhancedResult = {
-            disease: {
-              name: backendResult.disease || "Unknown Disease",
-              confidence: Math.round((backendResult.confidence || 0) * 100),
-              image: "/plant-disease-early-blight-on-leaves.jpg",
-            },
-            description: backendResult.disease
-              ? `${backendResult.disease} is a plant disease that affects crop health. Early detection and proper treatment are essential for maintaining healthy crops.`
-              : "Disease analysis completed. Please consult with agricultural experts for detailed treatment recommendations.",
+          const diseaseInfo = diseaseData[backendResult.disease] ?? {
+            description: "Disease analysis completed. Please consult with agricultural experts for detailed treatment recommendations.",
             prevention: [
               "Ensure proper air circulation around plants",
               "Avoid overhead watering",
@@ -83,7 +86,18 @@ export function AnalysisResults({ image, crop, onAnalysisComplete, onViewCommuni
               "Use organic treatment options when possible",
               "Consult with local agricultural extension services",
             ],
-            location: "Maharashtra, Pune",
+          };
+
+          const enhancedResult = {
+            disease: {
+              name: formatDiseaseName(backendResult.disease) || "Unknown Disease",
+              confidence: Math.round((backendResult.confidence || 0) * 100),
+              image: diseaseInfo?.image ?? "/plant-disease-early-blight-on-leaves.jpg",
+            },
+            description: diseaseInfo.description,
+            prevention: diseaseInfo.prevention,
+            treatment: diseaseInfo.treatment,
+            location: "Tamil Nadu, Chennai",
           }
 
           setResult(enhancedResult)
@@ -249,7 +263,7 @@ export function AnalysisResults({ image, crop, onAnalysisComplete, onViewCommuni
                 <img
                   src={result?.disease?.image || "/placeholder.svg?height=96&width=96&query=plant disease"}
                   alt={result?.disease?.name}
-                  className="w-24 h-24 rounded-lg object-cover animate-in fade-in duration-500"
+                  className="w-[300px] h-[200px] rounded-lg object-cover animate-in fade-in duration-500"
                 />
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-amber-900 mb-2">{result?.disease?.name}</h3>
