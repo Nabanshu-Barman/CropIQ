@@ -1,31 +1,55 @@
-"use client";
+"use client"
 
-import { useEffect } from "react";
-import L from "leaflet";
+import React, { useEffect } from "react"
+import { MapContainer as RLMap, TileLayer, Marker, Popup, useMap } from "react-leaflet"
+import L from "leaflet"
+import "leaflet/dist/leaflet.css"
+
+// Fix default marker icon paths so the pin is visible in Next.js builds
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png"
+import markerIcon from "leaflet/dist/images/marker-icon.png"
+import markerShadow from "leaflet/dist/images/marker-shadow.png"
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: (markerIcon2x as any).src || (markerIcon2x as any),
+  iconUrl: (markerIcon as any).src || (markerIcon as any),
+  shadowUrl: (markerShadow as any).src || (markerShadow as any),
+})
 
 type Props = {
-  coords: { lat: number; lon: number };
-};
+  coords: { lat: number; lon: number }
+  scrollWheelZoom?: boolean
+}
 
-export default function MapContainer({ coords }: Props) {
+function Recenter({ lat, lon }: { lat: number; lon: number }) {
+  const map = useMap()
   useEffect(() => {
-    const map = L.map("map").setView([coords.lat, coords.lon], 13);
+    map.setView([lat, lon], map.getZoom() || 8, { animate: true })
+  }, [lat, lon, map])
+  return null
+}
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-    }).addTo(map);
-
-    L.marker([coords.lat, coords.lon]).addTo(map);
-
-    return () => {
-      map.remove();
-    };
-  }, [coords]);
-
+export default function Map({ coords, scrollWheelZoom = false }: Props) {
+  const { lat, lon } = coords
   return (
-    <div
-      id="map"
-      style={{ height: "400px", width: "100%", marginTop: "10px" }}
-    />
-  );
+    <div style={{ width: "100%", height: "100%" }}>
+      <RLMap
+        center={[lat, lon]}
+        zoom={8}
+        scrollWheelZoom={scrollWheelZoom}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[lat, lon]}>
+          <Popup>
+            {lat.toFixed(4)}, {lon.toFixed(4)}
+          </Popup>
+        </Marker>
+        <Recenter lat={lat} lon={lon} />
+      </RLMap>
+    </div>
+  )
 }

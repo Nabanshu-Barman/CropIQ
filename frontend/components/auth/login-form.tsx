@@ -15,7 +15,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onLogin }: LoginFormProps) {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
@@ -25,13 +25,12 @@ export function LoginForm({ onLogin }: LoginFormProps) {
     setIsLoading(true)
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 1200))
 
-    // Mock successful login
     onLogin({
       id: "1",
-      email,
-      name: "John Farmer",
+      username,
+      name: username || "Farmer",
     })
 
     setIsLoading(false)
@@ -68,19 +67,9 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                 />
               </div>
             </div>
-            <h1 className="text-5xl font-bold text-gradient-earth mb-2 text-glow-natural animate-slide-up"></h1>
-            <p
-              className="text-xl text-muted-foreground font-medium animate-slide-up"
-              style={{ animationDelay: "0.2s" }}
-            >
-              
-            </p>
           </div>
 
-          <Card
-            className="glass-earth hover-lift animate-scale-in border-0 shadow-2xl"
-            style={{ animationDelay: "0.4s" }}
-          >
+          <Card className="glass-earth hover-lift animate-scale-in border-0 shadow-2xl" style={{ animationDelay: "0.4s" }}>
             <CardHeader className="text-center">
               <CardTitle className="text-3xl font-semibold text-gradient-earth mb-2">Welcome Back</CardTitle>
               <CardDescription className="text-muted-foreground text-lg">
@@ -91,26 +80,26 @@ export function LoginForm({ onLogin }: LoginFormProps) {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label
-                    htmlFor="email"
+                    htmlFor="username"
                     className={`transition-all duration-300 font-medium ${
-                      focusedField === "email" ? "text-primary text-glow-natural" : "text-foreground"
+                      focusedField === "username" ? "text-primary text-glow-natural" : "text-foreground"
                     }`}
                   >
-                    Email Address
+                    Username
                   </Label>
                   <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onFocus={() => setFocusedField("email")}
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onFocus={() => setFocusedField("username")}
                     onBlur={() => setFocusedField(null)}
                     className={`glass-natural transition-all duration-300 hover-glow ${
-                      focusedField === "email"
+                      focusedField === "username"
                         ? "border-primary ring-2 ring-primary/30 shadow-lg animate-natural-glow"
                         : "border-border"
                     }`}
-                    placeholder="farmer@example.com"
+                    placeholder="e.g., john_farmer"
                     required
                   />
                 </div>
@@ -162,35 +151,8 @@ export function LoginForm({ onLogin }: LoginFormProps) {
                   )}
                 </AnimatedButton>
               </form>
-
-              <div className="mt-6 text-center">
-                <p className="text-muted-foreground">
-                  Don't have an account?{" "}
-                  <button className="text-primary hover:text-accent font-semibold transition-all duration-300 hover-glow">
-                    Sign up for free
-                  </button>
-                </p>
-              </div>
             </CardContent>
           </Card>
-
-          <div className="mt-8 text-center animate-slide-up" style={{ animationDelay: "0.6s" }}>
-            <p className="text-muted-foreground mb-6 text-lg">Powered by AI for smarter farming</p>
-            <div className="flex justify-center gap-8">
-              <div className="flex flex-col items-center gap-2 hover-lift">
-                <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-natural-glow" />
-                <span className="text-sm font-medium text-foreground">Disease Detection</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 hover-lift" style={{ animationDelay: "0.2s" }}>
-                <div className="w-4 h-4 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full animate-natural-glow" />
-                <span className="text-sm font-medium text-foreground">Yield Prediction</span>
-              </div>
-              <div className="flex flex-col items-center gap-2 hover-lift" style={{ animationDelay: "0.4s" }}>
-                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full animate-natural-glow" />
-                <span className="text-sm font-medium text-foreground">Community Insights</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

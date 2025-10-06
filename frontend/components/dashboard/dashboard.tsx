@@ -4,7 +4,8 @@ import { useState } from "react"
 import { Header } from "./header"
 import { TabNavigation } from "./tab-navigation"
 import { CropDoctor } from "./crop-doctor"
-import { YieldPredictor } from "./yield-predictor"
+// Use the default export to avoid named-export mismatch issues
+import YieldPredictor from "./yield-predictor"
 import { ManualPredictor } from "./manual-predictor"
 import { Profile } from "./profile"
 
